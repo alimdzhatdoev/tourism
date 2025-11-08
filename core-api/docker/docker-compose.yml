@@ -1,0 +1,22 @@
+version: "3"
+
+services:
+  core:
+    container_name: CONTAINER_NAME
+    image: CONTAINER_IMAGE
+    environment:
+      - DJANGO_SETTINGS_MODULE
+    env_file:
+      - ./.env
+    command: /start-web.sh
+    volumes:
+      - static:/code/static
+      - media:/code/media
+    restart: always
+    expose:
+      - 8000
+    ports:
+      - 8270:8000
+volumes:
+  media:
+  static:

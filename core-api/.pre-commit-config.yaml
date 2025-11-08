@@ -1,0 +1,39 @@
+repos:
+  - repo: local
+    hooks:
+      - id: autoflake
+        name: autoflake
+        entry: poetry run autoflake --remove-all-unused-imports --ignore-init-module-imports -ir
+        language: system
+        # pass_filenames: false
+
+  - repo: local
+    hooks:
+      - id: isort
+        name: isort
+        entry: poetry run isort -rc
+        language: system
+        # pass_filenames: false
+
+  - repo: https://github.com/psf/black
+    rev: 20.8b1
+    hooks:
+      - id: black
+        language_version: python3.8
+        additional_dependencies: ['click==8.0.4']
+
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v2.4.0
+    hooks:
+      - id: flake8
+        language_version: python3.8
+      - id: mixed-line-ending
+        args: [--fix=lf]
+
+  # - repo: local
+  #   hooks:
+  #     - id: sanitychecks
+  #       name: sanitychecks
+  #       entry: poetry run backend/sanity_checks.sh
+  #       language: system
+        # pass_filenames: false

@@ -1,0 +1,60 @@
+version: "3"
+
+services:
+  core:
+    container_name: visit-core-api
+    build:
+      context: .
+      dockerfile: ./docker/python/Dockerfile
+    environment:
+      - DJANGO_SETTINGS_MODULE
+    env_file:
+      - ./.env
+    command: /start-web.sh
+    volumes:
+      - ./backend:/code/backend
+      - ./static:/code/static
+      - ./media:/code/media
+    restart: always
+    expose:
+      - 8000
+    ports:
+      - 8270:8000
+  # redis:
+  #   container_name: parfumpro-core-api_redis
+  #   image: redis:7-alpine
+  # celery_worker:
+  #   container_name: parfumpro-core-api_celery
+  #   build:
+  #     context: .
+  #     dockerfile: ./docker/python/Dockerfile
+  #   environment:
+  #     - DJANGO_SETTINGS_MODULE
+  #   command: /start-celeryworker.sh
+  #   env_file:
+  #     - ./.env
+  #   volumes:
+  #     - ./backend:/code/backend
+  #     - ./static:/code/static
+  #     - ./media:/code/media
+  #   depends_on:
+  #     - redis
+  # celery_beat:
+  #   container_name: parfumpro-core-api_celery_beat
+  #   build:
+  #     context: .
+  #     dockerfile: ./docker/python/Dockerfile
+  #   environment:
+  #     - DJANGO_SETTINGS_MODULE
+  #   command: /start-celerybeat.sh
+  #   env_file:
+  #     - ./.env
+  #   volumes:
+  #     - ./backend:/code/backend
+  #     - static:/code/static
+  #     - media:/code/media
+  #   depends_on:
+  #     - redis
+volumes:
+  media:
+  static:

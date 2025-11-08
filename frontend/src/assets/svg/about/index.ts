@@ -1,0 +1,6 @@
+export {ReactComponent as CultureSvg} from './culture.svg'
+export {ReactComponent as MineralSvg} from './mineral.svg'
+export {ReactComponent as NatureSvg} from './nature.svg'
+export {ReactComponent as ResortSvg} from './resort.svg'
+export {ReactComponent as ScienceSvg} from './science.svg'
+export {ReactComponent as SportSvg} from './sport.svg'

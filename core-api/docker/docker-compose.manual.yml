@@ -1,0 +1,69 @@
+version: "3"
+
+services:
+#  redis:
+#    image: redis:latest
+#    restart: always
+#    container_name: redis
+#    command: redis-server --maxmemory 1gb --maxmemory-policy allkeys-lru
+#    volumes:
+#      - redis_data:/var/lib/redis
+#    ports:
+#      - 6379
+#    networks:
+#      - redis_net
+
+  kchrtravel-core-api:
+    container_name: kchrtravel-core-api
+    build:
+      context: ./..
+      dockerfile: docker/python/Dockerfile
+      # image: ${CI_REGISTRY_IMAGE}
+    environment:
+      - DJANGO_SETTINGS_MODULE
+    env_file:
+      - ../.env
+    command: /start-web.sh
+    volumes:
+      - static:/code/static
+      - media:/code/media
+    restart: always
+    expose:
+      - 8110
+    ports:
+      - 8110:8000
+
+#  celery_worker:
+#    container_name: celery_worker
+#    build:
+#      context: ./..
+#      dockerfile: docker/python/Dockerfile
+#    command: celery -A config worker -l ${DJANGO_LOG_LEVEL}
+#    restart: always
+#    env_file:
+#      - ../.env
+#    depends_on:
+#      - redis
+#    networks:
+#      - redis_net
+#
+#  celery_beat:
+#    container_name: celery_beat
+#    build:
+#      context: ./..
+#      dockerfile: docker/python/Dockerfile
+#    command: celery -A config beat -l ${DJANGO_LOG_LEVEL}
+#    restart: always
+#    env_file:
+#      - ../.env
+#    depends_on:
+#      - redis
+#    networks:
+#      - redis_net
+
+volumes:
+  media:
+  static:
+#
+#networks:
+#  redis_net:
