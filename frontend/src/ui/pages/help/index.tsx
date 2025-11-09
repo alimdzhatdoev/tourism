@@ -50,7 +50,7 @@ const HelpPage: FC = () => {
         position: 'absolute',
         top: 0,
         height: screenWidth >= 1200 ? '600px' : '340px',
-        paddingTop: screenWidth >= 1200 ? '100px' : '0px'
+        paddingTop: screenWidth >= 1200 ? '50px' : '0px'
       }} headerTitle='На помощь туристу' />
 
       <Typography
