@@ -1,9 +1,9 @@
-import {FC, PropsWithChildren} from 'react'
-import {RootBlock, RootBlockProps} from '..'
-import {BreadcrumbsProps, TypographyProps} from '@mui/material'
-import {asx} from '@/core/utils'
-import {LinkProps} from 'react-router-dom'
-import {APP_FONTS} from '@/ui/themes/baseTheme'
+import { FC, PropsWithChildren } from 'react'
+import { RootBlock, RootBlockProps } from '..'
+import { BreadcrumbsProps, TypographyProps } from '@mui/material'
+import { asx } from '@/core/utils'
+import { LinkProps } from 'react-router-dom'
+import { APP_FONTS } from '@/ui/themes/baseTheme'
 
 type ChildrenToName<T extends PropsWithChildren> = Omit<T, 'children'> & {
   name: string
@@ -16,11 +16,11 @@ export interface RootHeaderProps extends Omit<RootBlockProps, 'slotProps'> {
   uppercasedHeaderTitle?: boolean
   isLoading?: boolean
   slotProps?: RootBlockProps['slotProps'] &
-    Partial<{
-      breadcrumbs: Partial<BreadcrumbsProps>
-      mainBreadcrumb: Partial<ChildrenToName<LinkProps>>
-      currentBreadcrumb: Partial<TypographyProps>
-    }>
+  Partial<{
+    breadcrumbs: Partial<BreadcrumbsProps>
+    mainBreadcrumb: Partial<ChildrenToName<LinkProps>>
+    currentBreadcrumb: Partial<TypographyProps>
+  }>
 }
 
 export const RootHeader: FC<RootHeaderProps> = ({
@@ -52,6 +52,7 @@ export const RootHeader: FC<RootHeaderProps> = ({
             {
               textTransform: 'uppercase',
               fontFamily: APP_FONTS.oswald,
+              color: '#fff'
             },
             ...asx(slotProps?.headerTitle?.sx),
           ],

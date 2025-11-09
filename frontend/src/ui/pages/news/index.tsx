@@ -1,12 +1,12 @@
-import {FC} from 'react'
-import {OrderingBar, PaginationBar} from '@/ui/components/_bars'
-import {GridBlock, RootHeader} from '@/ui/components/_common'
-import {NewsTile} from '@/ui/components/_tiles'
-import {useBreakpointValues} from '@/core/hooks'
-import {useSearchParams} from 'react-router-dom'
-import {useGetPostsListQuery} from '@/core/store/posts'
+import { FC } from 'react'
+import { OrderingBar, PaginationBar } from '@/ui/components/_bars'
+import { GridBlock, RootHeader } from '@/ui/components/_common'
+import { NewsTile } from '@/ui/components/_tiles'
+import { useBreakpointValues } from '@/core/hooks'
+import { useSearchParams } from 'react-router-dom'
+import { useGetPostsListQuery } from '@/core/store/posts'
 import dayjs from 'dayjs'
-import {dateTimeFormats} from '@/constants'
+import { dateTimeFormats } from '@/constants'
 
 const QUERY_SIZE = 12
 const DEFAULT_COLUMNS = 4
@@ -26,7 +26,7 @@ const NewsPage: FC = () => {
   const posts = postsApi.data?.data.results ?? []
   const count = postsApi.data?.data.pageCount
 
-  const {value: columns} = useBreakpointValues(DEFAULT_COLUMNS, {
+  const { value: columns } = useBreakpointValues(DEFAULT_COLUMNS, {
     xs: 1,
     sm: 2,
     md: 3,
@@ -36,7 +36,19 @@ const NewsPage: FC = () => {
 
   return (
     <>
-      <RootHeader headerTitle='Новости' />
+      <RootHeader sx={{
+        background: 'url(news_back.png)',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat',
+        backgroundSize: 'cover',
+        maxWidth: '100%',
+        margin: 0,
+        justifyContent: 'center',
+        position: 'absolute',
+        top: 0,
+        height: '600px',
+        paddingTop: '100px'
+      }} headerTitle='Новости' />
 
       <OrderingBar
         slotProps={{
@@ -49,7 +61,7 @@ const NewsPage: FC = () => {
             },
           },
         }}
-        sx={{margin: '0 0 50px'}}
+        sx={{ margin: '500px 0 50px' }}
       />
 
       <GridBlock

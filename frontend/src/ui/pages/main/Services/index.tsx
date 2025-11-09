@@ -170,9 +170,10 @@ export const Services: FC = () => {
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            border: '1px solid black',
+            border: '1px solid #fff',
             '& svg': {
               fontSize: '30px',
+              color: '#fff'
             },
           }}
         >
@@ -187,9 +188,10 @@ export const Services: FC = () => {
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            border: '1px solid black',
+            border: '1px solid #fff',
             '& svg': {
               fontSize: '30px',
+              color: '#fff'
             },
           }}
         >

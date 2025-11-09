@@ -1,24 +1,24 @@
-import {FC, useMemo} from 'react'
-import {Box, darken, Typography} from '@mui/material'
-import {styles as s} from './Footer.styles'
-import {FOOTER_COLUMNS_LINKS, FOOTER_MISC_LINKS} from '@/constants'
-import {Link, useLocation} from 'react-router-dom'
-import {Logo} from '../../_common/Logo/Logo'
-import {TLink} from 'types-common'
-import {colorScheme, rootStyle} from '@/core/utils'
-import {Background} from '../../_common'
-import {KchrTour, MinistryMono, ProjectMono, Tg, Vk} from '@/assets/svg'
-import {useGetPostsListQuery} from '@/core/store/posts'
-import {useIsDownLg} from '@/core/hooks'
+import { FC, useMemo } from 'react'
+import { Box, darken, Typography } from '@mui/material'
+import { styles as s } from './Footer.styles'
+import { FOOTER_COLUMNS_LINKS, FOOTER_MISC_LINKS } from '@/constants'
+import { Link, useLocation } from 'react-router-dom'
+import { Logo } from '../../_common/Logo/Logo'
+import { TLink } from 'types-common'
+import { colorScheme, rootStyle } from '@/core/utils'
+import { Background } from '../../_common'
+import { KchrTour, MinistryMono, ProjectMono, Vk } from '@/assets/svg'
+import { useGetPostsListQuery } from '@/core/store/posts'
+import { useIsDownLg } from '@/core/hooks'
 
-const FooterLink: FC<TLink> = ({path, title}) => (
+const FooterLink: FC<TLink> = ({ path, title }) => (
   <Typography component={Link} to={path} fontSize='inherit'>
     {title}
   </Typography>
 )
 
 export const Footer: FC = () => {
-  const {pathname} = useLocation()
+  const { pathname } = useLocation()
   const isDownLg = useIsDownLg()
 
   const postsApi = useGetPostsListQuery({
@@ -56,7 +56,7 @@ export const Footer: FC = () => {
             marginBottom: '42px',
           }}
         >
-          <Box component={Link} to='/' sx={{marginRight: 'auto'}}>
+          <Box component={Link} to='/' sx={{ marginRight: 'auto' }}>
             <Logo
               variant='text'
               sx={{
@@ -68,7 +68,7 @@ export const Footer: FC = () => {
             />
           </Box>
 
-          <Box
+          {/* <Box
             component={Link}
             sx={{
               display: 'flex',
@@ -85,7 +85,7 @@ export const Footer: FC = () => {
             to='https://t.me/kchturism'
           >
             <Tg />
-          </Box>
+          </Box> */}
           <Box
             component={Link}
             sx={{
@@ -127,7 +127,7 @@ export const Footer: FC = () => {
             component={Link}
             to={link.path}
             key={link.path}
-            sx={{opacity: 0.5}}
+            sx={{ opacity: 0.5 }}
           >
             {link.title}
           </Typography>
@@ -160,7 +160,7 @@ export const Footer: FC = () => {
         ]}
       >
         <Box sx={s.columnsList}>
-          <Box sx={[s.columnItem, {width: '20%'}]}>
+          <Box sx={[s.columnItem, { width: '20%' }]}>
             <Box component={Link} to='/' sx={s.columnHeader}>
               <Logo
                 variant='text'
@@ -182,9 +182,9 @@ export const Footer: FC = () => {
             ))}
           </Box>
 
-          <Box sx={[s.columnItem, {width: '45%'}]}>
+          <Box sx={[s.columnItem, { width: '45%' }]}>
             <Typography
-              sx={[s.columnHeader, {fontWeight: 500, fontSize: '24px'}]}
+              sx={[s.columnHeader, { fontWeight: 500, fontSize: '24px' }]}
             >
               На помощь туристу
             </Typography>
@@ -200,13 +200,13 @@ export const Footer: FC = () => {
 
           <Box sx={s.columnItem}>
             <Typography
-              sx={[s.columnHeader, {fontWeight: 500, fontSize: '24px'}]}
+              sx={[s.columnHeader, { fontWeight: 500, fontSize: '24px' }]}
             >
               Связаться с нами
             </Typography>
 
             <Box sx={s.socialsContainer}>
-              <Box
+              {/* <Box
                 component={Link}
                 sx={[
                   s.socialLink,
@@ -227,17 +227,16 @@ export const Footer: FC = () => {
                 to='https://t.me/kchturism'
               >
                 <Tg />
-              </Box>
+              </Box> */}
               <Box
                 component={Link}
                 sx={[
                   s.socialLink,
                   {
                     color: t =>
-                      `${
-                        isTransparent
-                          ? colorScheme(t).background.root
-                          : colorScheme(t).primary.main
+                      `${isTransparent
+                        ? colorScheme(t).background.root
+                        : colorScheme(t).primary.main
                       } !important`,
                   },
                   {
@@ -304,11 +303,19 @@ export const Footer: FC = () => {
           component={Link}
           to='https://xn--80aapampemcchfmo7a3c9ehj.xn--p1ai/projects/turizm/'
         >
-          <ProjectMono />
+          {pathname == "/" ?
+            <ProjectMono />
+            :
+            <img src="logo_nacproject_color.png" alt="" />
+          }
         </Box>
 
         <Box component={Link} to='http://tourismkchr.ru/'>
-          <MinistryMono />
+          {pathname == "/" ?
+            <MinistryMono />
+            :
+            <img src="logo_tourism_color.png" alt="" />
+          }
         </Box>
 
         <Box component={Link} to='https://kch-tourism.ru/' marginBottom='14px'>

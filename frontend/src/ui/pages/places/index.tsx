@@ -1,24 +1,24 @@
-import {FC, useMemo} from 'react'
-import {PaginationBar} from '@/ui/components/_bars'
-import {PlaceTile} from '@/ui/components/_tiles'
-import {GridBlock, RootHeader} from '@/ui/components/_common'
-import {useGetAttractionsListQuery} from '@/core/store/attractions'
-import {useSearchParams} from 'react-router-dom'
-import {useBreakpointValues} from '@/core/hooks'
-import {useGetSubgroupQuery} from '@/core/store/subgroups'
-import {Typography} from '@mui/material'
-import {APP_FONTS} from '@/ui/themes/baseTheme'
+import { FC, useMemo } from 'react'
+import { PaginationBar } from '@/ui/components/_bars'
+import { PlaceTile } from '@/ui/components/_tiles'
+import { GridBlock, RootHeader } from '@/ui/components/_common'
+import { useGetAttractionsListQuery } from '@/core/store/attractions'
+import { useSearchParams } from 'react-router-dom'
+import { useBreakpointValues } from '@/core/hooks'
+import { useGetSubgroupQuery } from '@/core/store/subgroups'
+import { Typography } from '@mui/material'
+import { APP_FONTS } from '@/ui/themes/baseTheme'
 
 const QUERY_SIZE = 12
 const DEFAULT_COLUMNS = 4
 
 const PlacesPage: FC = () => {
   const [searchParams] = useSearchParams()
-  const {data, isFetching} = useGetAttractionsListQuery({
+  const { data, isFetching } = useGetAttractionsListQuery({
     page: parseInt(searchParams.get('page') || '1', 10),
     search: searchParams.get('search') ?? undefined,
     size: QUERY_SIZE,
-    expand: {photos: true, location: true, reviews: true},
+    expand: { photos: true, location: true, reviews: true },
     filters: {
       subgroup_id: searchParams.get('subgroup_id') ?? undefined,
     },
@@ -38,7 +38,7 @@ const PlacesPage: FC = () => {
     [subgroupsApi],
   )
 
-  const {value: columns} = useBreakpointValues(DEFAULT_COLUMNS, {
+  const { value: columns } = useBreakpointValues(DEFAULT_COLUMNS, {
     xs: 2,
     sm: 2,
     md: 3,
@@ -47,14 +47,27 @@ const PlacesPage: FC = () => {
   })
 
   const places =
-    data?.data.results.map(a => ({...a.placeTileProps, id: a.id})) ?? []
+    data?.data.results.map(a => ({ ...a.placeTileProps, id: a.id })) ?? []
 
   const count = data?.data.pageCount
 
   return (
     <>
       <RootHeader
-        sx={{alignItems: 'center'}}
+        sx={{
+          alignItems: 'center',
+          background: 'url(places_back.png)',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat',
+          backgroundSize: 'cover',
+          maxWidth: '100%',
+          margin: 0,
+          justifyContent: 'center',
+          position: 'absolute',
+          top: 0,
+          height: '600px',
+          paddingTop: '50px'
+        }}
         slotProps={{
           headerContainer: {
             sx: t => ({
@@ -71,7 +84,7 @@ const PlacesPage: FC = () => {
             }),
           },
         }}
-        headerTitle={subgroupName ?? 'Куда поехать'}
+        headerTitle={subgroupName ?? 'Интересные места'}
       />
 
       <Typography
@@ -80,8 +93,17 @@ const PlacesPage: FC = () => {
           fontSize: '18px',
           fontWeight: 500,
           fontFamily: APP_FONTS.montserrat,
-          maxWidth: '737px',
+          maxWidth: '100%',
           textAlign: 'center',
+          position: 'absolute',
+          zIndex: '1',
+          color: '#fff',
+          top: 0,
+          height: '600px',
+          display: 'flex',
+          alignItems: 'center',
+          paddingTop: '200px',
+
           [t.breakpoints.down('lg')]: {
             fontSize: '14px',
             textAlign: 'left',
@@ -90,13 +112,15 @@ const PlacesPage: FC = () => {
           },
         })}
       >
-        Здесь мы собрали самые удивительные места нашей республики, которые вы
-        просто обязаны посетить!
+        Мы собрали самые удивительные места нашей <br /> республики, которые вы просто обязаны посетить!
       </Typography>
 
       <GridBlock
         columns={columns}
         skeletonRows={QUERY_SIZE / columns}
+        sx={{
+          marginTop: '500px'
+        }}
         slotProps={{
           skeleton: {
             sx: t => ({

@@ -7,7 +7,7 @@ import {colors, HEADER_LINKS} from '@/constants'
 import {colorScheme, hideOn, rootStyle} from '@/core/utils'
 import MenuIcon from '@mui/icons-material/Menu'
 import {AuthButton, ModalController} from '../..'
-import {SearchIcon, Tg, Vk} from '@/assets/svg'
+import {SearchIcon, Vk} from '@/assets/svg'
 import {SearchModal, SearchModalProps} from '../../_modals'
 import {useIsDownLg, useModal} from '@/core/hooks'
 import {miscStateSelector} from '@/core/store/misc'
@@ -44,6 +44,11 @@ export const Header: FC = () => {
       [
         pathname === '/',
         pathname === '/about',
+        pathname === '/routes',
+        pathname === '/places',
+        pathname === '/news',
+        pathname === '/help',
+        pathname === '/services',
         pathname.includes('places/'),
       ].includes(true),
     [pathname],
@@ -117,7 +122,7 @@ export const Header: FC = () => {
             />
           </Box>
 
-          <Box
+          {/* <Box
             component={Link}
             sx={[
               s.socialLink,
@@ -133,7 +138,7 @@ export const Header: FC = () => {
             to='https://t.me/kchturism'
           >
             <Tg />
-          </Box>
+          </Box> */}
 
           <Box
             component={Link}
@@ -149,6 +154,7 @@ export const Header: FC = () => {
               },
             ]}
             to='https://vk.com/kchturism'
+            target='_blank'
           >
             <Vk />
           </Box>

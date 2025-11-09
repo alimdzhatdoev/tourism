@@ -466,6 +466,7 @@ const AboutPage: FC = () => {
                 sx={t => ({
                   width: '100%',
                   maxWidth: 'calc((100% - 14px * 3) / 4)',
+                  objectFit: 'cover',
                   aspectRatio: 427 / 322,
                   [t.breakpoints.down('lg')]: {
                     maxWidth: 'calc((100% - 14px) / 2)',

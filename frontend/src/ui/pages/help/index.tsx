@@ -1,14 +1,14 @@
-import {FC} from 'react'
-import {PaginationBar} from '@/ui/components/_bars'
-import {GridBlock, RootHeader} from '@/ui/components/_common'
-import {NewsTile} from '@/ui/components/_tiles'
-import {useBreakpointValues} from '@/core/hooks'
-import {useSearchParams} from 'react-router-dom'
-import {useGetPostsListQuery} from '@/core/store/posts'
+import { FC } from 'react'
+import { PaginationBar } from '@/ui/components/_bars'
+import { GridBlock, RootHeader } from '@/ui/components/_common'
+import { NewsTile } from '@/ui/components/_tiles'
+import { useBreakpointValues } from '@/core/hooks'
+import { useSearchParams } from 'react-router-dom'
+import { useGetPostsListQuery } from '@/core/store/posts'
 import dayjs from 'dayjs'
-import {dateTimeFormats} from '@/constants'
-import {Typography} from '@mui/material'
-import {APP_FONTS} from '@/ui/themes/baseTheme'
+import { dateTimeFormats } from '@/constants'
+import { Typography } from '@mui/material'
+import { APP_FONTS } from '@/ui/themes/baseTheme'
 
 const QUERY_SIZE = 12
 const DEFAULT_COLUMNS = 4
@@ -27,7 +27,7 @@ const HelpPage: FC = () => {
   const posts = postsApi.data?.data.results ?? []
   const count = postsApi.data?.data.pageCount
 
-  const {value: columns} = useBreakpointValues(DEFAULT_COLUMNS, {
+  const { value: columns } = useBreakpointValues(DEFAULT_COLUMNS, {
     xs: 1,
     sm: 2,
     md: 3,
@@ -37,7 +37,19 @@ const HelpPage: FC = () => {
 
   return (
     <>
-      <RootHeader headerTitle='На помощь туристу' />
+      <RootHeader sx={{
+        background: 'url(help_back.png)',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat',
+        backgroundSize: 'cover',
+        maxWidth: '100%',
+        margin: 0,
+        justifyContent: 'center',
+        position: 'absolute',
+        top: 0,
+        height: '600px',
+        paddingTop: '50px'
+      }} headerTitle='На помощь туристу' />
 
       <Typography
         sx={t => ({
@@ -47,6 +59,14 @@ const HelpPage: FC = () => {
           fontFamily: APP_FONTS.montserrat,
           maxWidth: '737px',
           textAlign: 'center',
+          position: 'absolute',
+          zIndex: '1',
+          color: '#fff',
+          top: 0,
+          height: '600px',
+          display: 'flex',
+          alignItems: 'center',
+          paddingTop: '250px',
           [t.breakpoints.down('lg')]: {
             fontSize: '14px',
             textAlign: 'left',
@@ -63,6 +83,9 @@ const HelpPage: FC = () => {
       <GridBlock
         columns={columns}
         skeletonRows={QUERY_SIZE / columns}
+        sx={{
+          marginTop: '500px'
+        }}
         slotProps={{
           skeleton: {
             sx: t => ({

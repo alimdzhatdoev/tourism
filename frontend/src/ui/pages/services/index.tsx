@@ -1,36 +1,36 @@
-import {FC, useMemo} from 'react'
-import {PaginationBar} from '@/ui/components/_bars'
-import {PlaceTile} from '@/ui/components/_tiles'
+import { FC, useMemo } from 'react'
+import { PaginationBar } from '@/ui/components/_bars'
+import { PlaceTile } from '@/ui/components/_tiles'
 import {
   DraggableBox,
   GridBlock,
   MobileLink,
   RootHeader,
 } from '@/ui/components/_common'
-import {useGetAttractionsListQuery} from '@/core/store/attractions'
-import {useSearchParams} from 'react-router-dom'
-import {useBreakpointValues} from '@/core/hooks'
-import {useGetSubgroupQuery} from '@/core/store/subgroups'
-import {Box, Button, Typography} from '@mui/material'
-import {APP_FONTS} from '@/ui/themes/baseTheme'
-import {GROUPS_IDS} from '@/constants'
-import {hideOn, rootStyle} from '@/core/utils'
+import { useGetAttractionsListQuery } from '@/core/store/attractions'
+import { useSearchParams } from 'react-router-dom'
+import { useBreakpointValues } from '@/core/hooks'
+import { useGetSubgroupQuery } from '@/core/store/subgroups'
+import { Box, Button, Typography } from '@mui/material'
+import { APP_FONTS } from '@/ui/themes/baseTheme'
+import { GROUPS_IDS } from '@/constants'
+import { hideOn, rootStyle } from '@/core/utils'
 
 const QUERY_SIZE = 12
 const DEFAULT_COLUMNS = 4
 
-export const SERVICES_FILTERS: Array<{group_id: number; title: string}> = [
-  {group_id: GROUPS_IDS.guides, title: 'Гиды'},
-  {group_id: GROUPS_IDS.hotels, title: 'Гостиницы'},
-  {group_id: GROUPS_IDS.equipment, title: 'Прокат оборудования'},
-  {group_id: GROUPS_IDS.restaurants, title: 'Кафе-рестораны'},
-  {group_id: GROUPS_IDS.museums, title: 'Музеи'},
-  {group_id: GROUPS_IDS.fuel_stations, title: 'АЗС'},
+export const SERVICES_FILTERS: Array<{ group_id: number; title: string }> = [
+  { group_id: GROUPS_IDS.guides, title: 'Гиды' },
+  { group_id: GROUPS_IDS.hotels, title: 'Гостиницы' },
+  { group_id: GROUPS_IDS.equipment, title: 'Прокат оборудования' },
+  { group_id: GROUPS_IDS.restaurants, title: 'Кафе-рестораны' },
+  { group_id: GROUPS_IDS.museums, title: 'Музеи' },
+  { group_id: GROUPS_IDS.fuel_stations, title: 'АЗС' },
 ]
 
 const ServicesPage: FC = () => {
   const [searchParams, setSearchParams] = useSearchParams()
-  const {data, isFetching} = useGetAttractionsListQuery({
+  const { data, isFetching } = useGetAttractionsListQuery({
     page: parseInt(searchParams.get('page') || '1', 10),
     search: searchParams.get('search') ?? undefined,
     size: QUERY_SIZE,
@@ -56,7 +56,7 @@ const ServicesPage: FC = () => {
     [subgroupsApi],
   )
 
-  const {value: columns} = useBreakpointValues(DEFAULT_COLUMNS, {
+  const { value: columns } = useBreakpointValues(DEFAULT_COLUMNS, {
     xs: 2,
     sm: 2,
     md: 3,
@@ -76,7 +76,20 @@ const ServicesPage: FC = () => {
   return (
     <>
       <RootHeader
-        sx={{alignItems: 'center'}}
+        sx={{
+          alignItems: 'center',
+          background: 'url(services_back.png)',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat',
+          backgroundSize: 'cover',
+          maxWidth: '100%',
+          margin: 0,
+          justifyContent: 'center',
+          position: 'absolute',
+          top: 0,
+          height: '600px',
+          paddingTop: '100px'
+        }}
         slotProps={{
           headerContainer: {
             sx: t => ({
@@ -107,6 +120,7 @@ const ServicesPage: FC = () => {
             justifyContent: 'center',
             gap: '25px',
             marginBottom: '64px',
+            marginTop: '500px'
           },
         ]}
       >
@@ -119,7 +133,7 @@ const ServicesPage: FC = () => {
                 : 'outlined'
             }
             sx={[
-              {minWidth: '288px', height: '53px', fontSize: '16px'},
+              { minWidth: '288px', height: '53px', fontSize: '16px' },
               searchParams.get('group_id') !== filter.group_id.toString() && {
                 color: t => t.palette.text.primary,
               },

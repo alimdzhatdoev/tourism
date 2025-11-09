@@ -4,7 +4,7 @@ import {GROUPS_IDS} from './api'
 export const HEADER_LINKS: Array<TLink> = [
   {title: 'О регионе', path: '/about'},
   {title: 'Маршруты', path: '/routes'},
-  {title: 'Куда поехать', path: '/places'},
+  {title: 'Интересные места', path: '/places'},
   {title: 'Новости', path: '/news'},
   {title: 'На помощь туристу', path: '/help'},
   {
@@ -17,7 +17,7 @@ export const HEADER_LINKS: Array<TLink> = [
 export const FOOTER_COLUMNS_LINKS: Array<TLink> = [
   {title: 'О регионе', path: '/about'},
   {title: 'Маршруты', path: '/routes'},
-  {title: 'Куда поехать?', path: '/places'},
+  {title: 'Интересные места', path: '/places'},
   {title: 'Новости', path: '/news'},
   {
     title: 'Сервисы и услуги',

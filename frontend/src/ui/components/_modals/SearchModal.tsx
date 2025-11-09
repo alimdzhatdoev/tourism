@@ -56,7 +56,7 @@ export const SearchModal: FC<SearchModalProps> = ({onClose, ...props}) => {
   }
 
   return (
-    <ModalContent title='Поиск' onClose={onClose} {...props}>
+    <ModalContent title='Поиск' onClose={onClose} {...props} sx={{overflow: 'hidden'}}>
       <TextField
         fullWidth
         value={search}

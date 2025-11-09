@@ -1,6 +1,6 @@
-import {FC} from 'react'
-import {PaginationBar} from '@/ui/components/_bars'
-import {RouteTile} from '@/ui/components/_tiles'
+import { FC } from 'react'
+import { PaginationBar } from '@/ui/components/_bars'
+import { RouteTile } from '@/ui/components/_tiles'
 import {
   DraggableBox,
   GridBlock,
@@ -8,44 +8,44 @@ import {
   MobileLink,
   RootHeader,
 } from '@/ui/components/_common'
-import {useGetRoutesListQuery} from '@/core/store/routes'
-import {useSearchParams} from 'react-router-dom'
-import {useBreakpointValues, useRouteLike} from '@/core/hooks'
-import {casx, hideOn} from '@/core/utils'
-import {BarWrapper} from '@/ui/components/_bars/BarWrapper'
-import {Box, Slider, Typography} from '@mui/material'
-import {RouteSeason} from '@/core/models'
+import { useGetRoutesListQuery } from '@/core/store/routes'
+import { useSearchParams } from 'react-router-dom'
+import { useBreakpointValues, useRouteLike } from '@/core/hooks'
+import { casx, hideOn } from '@/core/utils'
+import { BarWrapper } from '@/ui/components/_bars/BarWrapper'
+import { Box, Slider, Typography } from '@mui/material'
+import { RouteSeason } from '@/core/models'
 
 const QUERY_SIZE = 18
 const DEFAULT_COLUMNS = 4
 
-const SEASON_FILTERS: Array<{value: RouteSeason | 'no_filter'; title: string}> =
+const SEASON_FILTERS: Array<{ value: RouteSeason | 'no_filter'; title: string }> =
   [
-    {value: 'all', title: 'Все сезоны'},
-    {value: 'autumn', title: 'Осень'},
-    {value: 'spring', title: 'Весна'},
-    {value: 'summer', title: 'Лето'},
-    {value: 'winter', title: 'Зима'},
+    { value: 'all', title: 'Все сезоны' },
+    { value: 'autumn', title: 'Осень' },
+    { value: 'spring', title: 'Весна' },
+    { value: 'summer', title: 'Лето' },
+    { value: 'winter', title: 'Зима' },
   ]
 
 const TRANSPORTATION_FILTERS: Array<{
   value: string
   title: string
 }> = [
-  {value: 'no_filter', title: 'Любой способ передвижения'},
-  {value: 'is_on_horseback', title: 'Верхом'},
-  {value: 'is_on_quad_bike', title: 'Квадроцикл'},
-  {value: 'is_on_foot', title: 'Пешком'},
-  {value: 'is_on_car', title: 'Автомобиль'},
-]
+    { value: 'no_filter', title: 'Любой способ передвижения' },
+    { value: 'is_on_horseback', title: 'Верхом' },
+    { value: 'is_on_quad_bike', title: 'Квадроцикл' },
+    { value: 'is_on_foot', title: 'Пешком' },
+    { value: 'is_on_car', title: 'Автомобиль' },
+  ]
 
 const TYPE_FILTERS: Array<{
   value: string
   title: string
 }> = [
-  {value: 'no_filter', title: 'Любой тип'},
-  {value: 'is_family', title: 'Семейные'},
-]
+    { value: 'no_filter', title: 'Любой тип' },
+    { value: 'is_family', title: 'Семейные' },
+  ]
 
 const RoutesPage: FC = () => {
   const [searchParams, setSearchParams] = useSearchParams()
@@ -53,7 +53,7 @@ const RoutesPage: FC = () => {
   const maxDifficulty = searchParams.get('max_difficulty')
   const minDifficulty = searchParams.get('min_difficulty')
 
-  const {data, isFetching} = useGetRoutesListQuery({
+  const { data, isFetching } = useGetRoutesListQuery({
     page: parseInt(searchParams.get('page') || '1', 10),
     search: searchParams.get('search') ?? undefined,
     filters: {
@@ -83,7 +83,7 @@ const RoutesPage: FC = () => {
     },
   })
 
-  const {value: columns} = useBreakpointValues(DEFAULT_COLUMNS, {
+  const { value: columns } = useBreakpointValues(DEFAULT_COLUMNS, {
     xs: 1,
     sm: 1,
     md: 2,
@@ -91,17 +91,30 @@ const RoutesPage: FC = () => {
     xl: 2,
   })
 
-  const {toggleLike} = useRouteLike()
+  const { toggleLike } = useRouteLike()
 
   const routes =
-    data?.data.results.map(r => ({...r.routeTileProps, id: r.id})) ?? []
+    data?.data.results.map(r => ({ ...r.routeTileProps, id: r.id })) ?? []
 
   const count = data?.data.pageCount
 
   return (
     <>
       <RootHeader
-        sx={{alignItems: 'center'}}
+        sx={{
+          alignItems: 'center',
+          background: 'url(routes_back.png)',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat',
+          backgroundSize: 'cover',
+          maxWidth: '100%',
+          margin: 0,
+          justifyContent: 'center',
+          position: 'absolute',
+          top: 0,
+          height: '600px',
+          paddingTop: '100px'
+        }}
         slotProps={{
           headerContainer: {
             sx: t => ({
@@ -203,12 +216,13 @@ const RoutesPage: FC = () => {
             marginBottom: '64px',
             justifyContent: 'space-between',
             width: '100%',
+            marginTop: '500px'
           },
         ]}
       >
-        <Box sx={{display: 'flex', flexDirection: 'column'}}>
+        <Box sx={{ display: 'flex', flexDirection: 'column' }}>
           <Typography textTransform='uppercase'>Сложность</Typography>
-          <Box sx={{width: '280px'}}>
+          <Box sx={{ width: '280px' }}>
             <Slider
               sx={{
                 '& .MuiSlider-mark': {
@@ -232,7 +246,7 @@ const RoutesPage: FC = () => {
                 },
               }}
               valueLabelDisplay='auto'
-              marks={Array.from({length: 10}, (_, i) => ({
+              marks={Array.from({ length: 10 }, (_, i) => ({
                 label: i + 1,
                 value: i + 1,
               }))}
@@ -251,7 +265,7 @@ const RoutesPage: FC = () => {
           </Box>
         </Box>
 
-        <Box sx={{display: 'flex', gap: '28px'}}>
+        <Box sx={{ display: 'flex', gap: '28px' }}>
           <ListSelect
             items={SEASON_FILTERS}
             value={searchParams.get('season') ?? 'all'}
@@ -358,9 +372,9 @@ const RoutesPage: FC = () => {
 
             return true
           })
-          .map(({id, ...props}) => (
+          .map(({ id, ...props }) => (
             <RouteTile
-              onHeartClick={() => toggleLike({id, isLiked: props.isFavorite})}
+              onHeartClick={() => toggleLike({ id, isLiked: props.isFavorite })}
               key={id}
               {...props}
             />
