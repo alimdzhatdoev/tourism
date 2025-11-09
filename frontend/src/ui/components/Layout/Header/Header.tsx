@@ -260,8 +260,12 @@ export const Header: FC = () => {
                 ? colors.light.primary.update1
                 : t => colorScheme(t).text.contrast,
             },
-            !isDownLg && {
+            !isDownLg && screenWidth < 1200 && {
               backgroundColor: 'transparent',
+            },
+            !isDownLg && screenWidth >= 1200 && {
+              backgroundColor: t =>
+                isScrolled ? colorScheme(t).background.root : 'transparent',
             },
             isDownLg && {
               transition: 'all 0ms ease-in',
@@ -270,8 +274,12 @@ export const Header: FC = () => {
             },
             !isDownLg &&
             !isScrolled && {
-              boxShadow: 'unset',
+              boxShadow: 'none',
             },
+            isScrolled && screenWidth < 1200 && {
+              backgroundColor: '#fff',
+              boxShadow: '0px 4px 46.4px 0px #B4B4B440'
+            }
           ]
         }
       >
@@ -290,22 +298,29 @@ export const Header: FC = () => {
         >
           {isScrolled || isDownLg ? (
             <Link to='/' color='inherit'>
-              {/* <Logo
-                variant='text'
-                color='inherit'
-                sx={t => ({
-                  height: '45px',
-                  width: '211px',
-                  [t.breakpoints.down('lg')]: {
-                    '& svg': {
-                      height: '34px',
-                      width: '164px',
+              {screenWidth >= 1200
+                ?
+                <Logo
+                  variant='text'
+                  color='inherit'
+                  sx={t => ({
+                    height: '45px',
+                    width: '211px',
+                    [t.breakpoints.down('lg')]: {
+                      '& svg': {
+                        height: '34px',
+                        width: '164px',
+                      },
                     },
-                  },
-                })}
-              /> */}
-
-              {isActive ? <img src="mobileLogoBlack.png" alt="" /> : <img src="mobileLogo.png" alt="" />}
+                  })}
+                />
+                :
+                isScrolled
+                  ?
+                  <img src="mobileLogoBlack.png" alt="" />
+                  :
+                  isActive ? <img src="mobileLogoBlack.png" alt="" /> : <img src="mobileLogo.png" alt="" />
+              }
             </Link>
           ) : (
             <Box
@@ -352,7 +367,12 @@ export const Header: FC = () => {
             >
               <MenuIcon />
             </SvgIcon> */}
-            {isActive ? <img src="burgerLogoBlack.png" alt="" /> : <img src="burgerLogo.png" alt="" />}
+            {isScrolled
+              ?
+              <img src="burgerLogoBlack.png" alt="" />
+              :
+              isActive ? <img src="burgerLogoBlack.png" alt="" /> : <img src="burgerLogo.png" alt="" />
+            }
 
           </IconButton>
 
