@@ -171,6 +171,7 @@ const ServicesPage: FC = () => {
               display: 'none',
             },
             marginBottom: '30px',
+            marginTop: '300px'
           },
         ]}
       >
