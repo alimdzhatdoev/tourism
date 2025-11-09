@@ -51,22 +51,23 @@ const PlacesPage: FC = () => {
 
   const count = data?.data.pageCount
 
+  const screenWidth = window.innerWidth;
   return (
     <>
       <RootHeader
         sx={{
           alignItems: 'center',
-          background: 'url(places_back.png)',
-          backgroundPosition: 'center',
-          backgroundRepeat: 'no-repeat',
-          backgroundSize: 'cover',
-          maxWidth: '100%',
+          background: screenWidth >= 1200 ? 'url(routes_back.png)' : 'none',
+          backgroundPosition: screenWidth >= 1200 ? 'center' : 'none',
+          backgroundRepeat: screenWidth >= 1200 ? 'no-repeat' : 'none',
+          backgroundSize: screenWidth >= 1200 ? 'cover' : 'none',
+          maxWidth: screenWidth >= 1200 ? '100%' : '1200px',
           margin: 0,
           justifyContent: 'center',
-          position: 'absolute',
+          position: screenWidth >= 1200 ? 'absolute' : 'inherit',
           top: 0,
-          height: '600px',
-          paddingTop: '50px'
+          height: screenWidth >= 1200 ? '600px' : 'auto',
+          paddingTop: screenWidth >= 1200 ? '50px' : '0'
         }}
         slotProps={{
           headerContainer: {
@@ -95,14 +96,15 @@ const PlacesPage: FC = () => {
           fontFamily: APP_FONTS.montserrat,
           maxWidth: '100%',
           textAlign: 'center',
-          position: 'absolute',
-          zIndex: '1',
-          color: '#fff',
+
+          position:  screenWidth >= 1200 ? 'absolute' : 'inherit',
+          zIndex:  screenWidth >= 1200 ? '1' : '0',
+          color:  screenWidth >= 1200 ? '#fff' : '#000',
           top: 0,
-          height: '600px',
-          display: 'flex',
-          alignItems: 'center',
-          paddingTop: '200px',
+          height:  screenWidth >= 1200 ? '600px' : 'auto',
+          display:  screenWidth >= 1200 ? 'flex' : 'block',
+          alignItems:  screenWidth >= 1200 ? 'center' : 'flex-start',
+          paddingTop:  screenWidth >= 1200 ? '200px': '0',
 
           [t.breakpoints.down('lg')]: {
             fontSize: '14px',
@@ -119,7 +121,7 @@ const PlacesPage: FC = () => {
         columns={columns}
         skeletonRows={QUERY_SIZE / columns}
         sx={{
-          marginTop: '500px'
+          marginTop: screenWidth >= 1200 ? '500px': 0
         }}
         slotProps={{
           skeleton: {

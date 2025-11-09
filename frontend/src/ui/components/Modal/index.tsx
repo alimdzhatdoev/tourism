@@ -75,7 +75,7 @@ export const ModalContent = forwardRef<HTMLDivElement, ModalContentProps>(
     return (
       <Box
         ref={mergeRefs(ref, containerRef)}
-        sx={[s.modalContentRoot, {maxWidth: px(maxWidth)}, ...asx(sx)]}
+        sx={[s.modalContentRoot, {maxWidth: px(maxWidth), width: '90%'}, ...asx(sx)]}
         {...props}
       >
         <Box sx={[s.header, ...asx(headerSx)]}>

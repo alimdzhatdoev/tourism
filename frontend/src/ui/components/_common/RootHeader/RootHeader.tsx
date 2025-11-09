@@ -30,6 +30,8 @@ export const RootHeader: FC<RootHeaderProps> = ({
   sx,
   ...blockProps
 }) => {
+  
+  const screenWidth = window.innerWidth;
   return (
     <RootBlock
       isLoading={isLoading}
@@ -52,7 +54,7 @@ export const RootHeader: FC<RootHeaderProps> = ({
             {
               textTransform: 'uppercase',
               fontFamily: APP_FONTS.oswald,
-              color: '#fff'
+              color: screenWidth >= 1200 ? '#fff' : '#000'
             },
             ...asx(slotProps?.headerTitle?.sx),
           ],
