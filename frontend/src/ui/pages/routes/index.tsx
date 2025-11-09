@@ -98,22 +98,24 @@ const RoutesPage: FC = () => {
 
   const count = data?.data.pageCount
 
+  const screenWidth = window.innerWidth;
+
   return (
     <>
       <RootHeader
         sx={{
           alignItems: 'center',
-          background: 'url(routes_back.png)',
-          backgroundPosition: 'center',
-          backgroundRepeat: 'no-repeat',
-          backgroundSize: 'cover',
-          maxWidth: '100%',
+          background: screenWidth >= 1200 ? 'url(routes_back.png)' : 'none',
+          backgroundPosition: screenWidth >= 1200 ? 'center' : 'none',
+          backgroundRepeat: screenWidth >= 1200 ? 'no-repeat' : 'none',
+          backgroundSize: screenWidth >= 1200 ? 'cover' : 'none',
+          maxWidth: screenWidth >= 1200 ? '100%' : '1200px',
           margin: 0,
           justifyContent: 'center',
-          position: 'absolute',
+          position: screenWidth >= 1200 ? 'absolute' : 'inherit',
           top: 0,
-          height: '600px',
-          paddingTop: '100px'
+          height: screenWidth >= 1200 ? '600px' : 'auto',
+          paddingTop: screenWidth >= 1200 ? '100px' : '0'
         }}
         slotProps={{
           headerContainer: {
@@ -216,7 +218,7 @@ const RoutesPage: FC = () => {
             marginBottom: '64px',
             justifyContent: 'space-between',
             width: '100%',
-            marginTop: '500px'
+            marginTop: screenWidth >= 1200 ? '500px' : '0'
           },
         ]}
       >
