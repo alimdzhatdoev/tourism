@@ -79,17 +79,18 @@ const ServicesPage: FC = () => {
       <RootHeader
         sx={{
           alignItems: 'center',
-          background: screenWidth >= 1200 ? 'url(routes_back.png)' : 'none',
-          backgroundPosition: screenWidth >= 1200 ? 'center' : 'none',
-          backgroundRepeat: screenWidth >= 1200 ? 'no-repeat' : 'none',
-          backgroundSize: screenWidth >= 1200 ? 'cover' : 'none',
-          maxWidth: screenWidth >= 1200 ? '100%' : '1200px',
+          background: 'url(news_back.png)',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat',
+          backgroundSize: 'cover',
+          maxWidth: '100%',
           margin: 0,
+          marginTop: '0 !important',
           justifyContent: 'center',
-          position: screenWidth >= 1200 ? 'absolute' : 'inherit',
+          position: 'absolute',
           top: 0,
-          height: screenWidth >= 1200 ? '600px' : 'auto',
-          paddingTop: screenWidth >= 1200 ? '100px' : '0'
+          height: screenWidth >= 1200 ? '600px' : '340px',
+          paddingTop: screenWidth >= 1200 ? '100px' : '50px'
         }}
         slotProps={{
           headerContainer: {
@@ -121,7 +122,7 @@ const ServicesPage: FC = () => {
             justifyContent: 'center',
             gap: '25px',
             marginBottom: '64px',
-            marginTop: screenWidth >= 1200 ? '500px': 0
+            marginTop: screenWidth >= 1200 ? '500px' : '290px'
           },
         ]}
       >

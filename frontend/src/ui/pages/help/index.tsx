@@ -39,17 +39,18 @@ const HelpPage: FC = () => {
   return (
     <>
       <RootHeader sx={{
-        background: screenWidth >= 1200 ? 'url(routes_back.png)' : 'none',
-        backgroundPosition: screenWidth >= 1200 ? 'center' : 'none',
-        backgroundRepeat: screenWidth >= 1200 ? 'no-repeat' : 'none',
-        backgroundSize: screenWidth >= 1200 ? 'cover' : 'none',
-        maxWidth: screenWidth >= 1200 ? '100%' : '1200px',
+        background: 'url(news_back.png)',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat',
+        backgroundSize: 'cover',
+        maxWidth: '100%',
         margin: 0,
+        marginTop: '0 !important',
         justifyContent: 'center',
-        position: screenWidth >= 1200 ? 'absolute' : 'inherit',
+        position: 'absolute',
         top: 0,
-        height: screenWidth >= 1200 ? '600px' : 'auto',
-        paddingTop: screenWidth >= 1200 ? '50px' : '0'
+        height: screenWidth >= 1200 ? '600px' : '340px',
+        paddingTop: screenWidth >= 1200 ? '100px' : '0px'
       }} headerTitle='На помощь туристу' />
 
       <Typography
@@ -61,18 +62,18 @@ const HelpPage: FC = () => {
           maxWidth: '737px',
           textAlign: 'center',
 
-          position:  screenWidth >= 1200 ? 'absolute' : 'inherit',
-          zIndex:  screenWidth >= 1200 ? '1' : '0',
-          color:  screenWidth >= 1200 ? '#fff' : '#000',
+          position: 'absolute',
+          zIndex: '1',
+          color: '#fff',
           top: 0,
-          height:  screenWidth >= 1200 ? '600px' : 'auto',
-          display:  screenWidth >= 1200 ? 'flex' : 'block',
-          alignItems:  screenWidth >= 1200 ? 'center' : 'flex-start',
-          paddingTop:  screenWidth >= 1200 ? '250px': '0',
+          height: screenWidth >= 1200 ? '600px' : '340px',
+          display: 'flex',
+          alignItems: 'center',
+          paddingTop: '200px',
           [t.breakpoints.down('lg')]: {
             fontSize: '14px',
-            textAlign: 'left',
-            padding: '0 30px',
+            textAlign: 'center',
+            padding: '140px 30px 0',
             marginBottom: '30px',
           },
         })}
@@ -86,7 +87,7 @@ const HelpPage: FC = () => {
         columns={columns}
         skeletonRows={QUERY_SIZE / columns}
         sx={{
-          marginTop: screenWidth >= 1200 ? '500px': 0
+          marginTop: screenWidth >= 1200 ? '600px' : '290px',
         }}
         slotProps={{
           skeleton: {

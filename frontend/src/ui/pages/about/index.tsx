@@ -138,7 +138,7 @@ const AboutPage: FC = () => {
           height: '823px',
           [t.breakpoints.down('lg')]: {
             padding: '0 25px 92px',
-            marginTop: '0px',
+            marginTop: '-80px',
             height: '636px',
             justifyContent: 'flex-end',
           },

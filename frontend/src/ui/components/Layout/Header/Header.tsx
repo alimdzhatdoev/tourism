@@ -5,7 +5,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { Background, Logo } from '../../_common'
 import { colors, HEADER_LINKS } from '@/constants'
 import { colorScheme, hideOn, rootStyle } from '@/core/utils'
-import MenuIcon from '@mui/icons-material/Menu'
+// import MenuIcon from '@mui/icons-material/Menu'
 import { AuthButton, ModalController } from '../..'
 import { SearchIcon, Vk } from '@/assets/svg'
 import { SearchModal, SearchModalProps } from '../../_modals'
@@ -57,6 +57,21 @@ export const Header: FC = () => {
   const { user } = useSelector(miscStateSelector)
 
   const [isActive, setIsActive] = useState(false);
+  const [bgColor, setBgColor] = useState("transparent");
+
+  useEffect(() => {
+    // let timer: number;
+    if (isActive) {
+      setBgColor("#fff")
+    } else {
+      // timer = window.setTimeout(() => setBgColor("transparent"), 200);
+      setBgColor("transparent")
+    }
+
+    // return () => clearTimeout(timer);
+  }, [isActive]);
+
+
   const authorizationModal = useModal<AuthorizationModalProps>()
 
   const handleBurgerClick = () => {
@@ -90,8 +105,9 @@ export const Header: FC = () => {
           top: '80px',
           left: 0,
           zIndex: 2,
-          transition: 'transform 0.4s ease-in-out',
-          transform: isActive ? 'translateY(0px)' : 'translateY(-150%)'
+          // transition: 'transform 0.4s ease-in-out',
+          // transform: isActive ? 'translateY(0px)' : 'translateY(-150%)'
+          display: isActive ? 'block' : 'none'
         }}>
           <ul style={{
             backgroundColor: '#fff',
@@ -101,7 +117,8 @@ export const Header: FC = () => {
             width: '100vw',
             height: 'fit-content',
             boxShadow: '0 0 30px #00000031',
-            padding: '5px 0'
+            padding: '5px 0',
+            borderTop: '1px solid #ececec'
           }}>
             <li style={{
               fontSize: '14px',
@@ -234,23 +251,29 @@ export const Header: FC = () => {
       </Background>
 
       <Background
-        sx={[
-          s.stickyRoot,
-          isTransparent &&
-          !isDownLg && {
-            color: isScrolled
-              ? colors.light.primary.update1
-              : t => colorScheme(t).text.contrast,
-          },
-          !isDownLg && {
-            backgroundColor: t =>
-              isScrolled ? colorScheme(t).background.root : 'transparent',
-          },
-          !isDownLg &&
-          !isScrolled && {
-            boxShadow: 'unset',
-          },
-        ]}
+        sx={
+          [
+            s.stickyRoot,
+            isTransparent &&
+            !isDownLg && {
+              color: isScrolled
+                ? colors.light.primary.update1
+                : t => colorScheme(t).text.contrast,
+            },
+            !isDownLg && {
+              backgroundColor: 'transparent',
+            },
+            isDownLg && {
+              transition: 'all 0ms ease-in',
+              backgroundColor: bgColor,
+              boxShadow: 'none'
+            },
+            !isDownLg &&
+            !isScrolled && {
+              boxShadow: 'unset',
+            },
+          ]
+        }
       >
         <Box
           sx={[
@@ -267,7 +290,7 @@ export const Header: FC = () => {
         >
           {isScrolled || isDownLg ? (
             <Link to='/' color='inherit'>
-              <Logo
+              {/* <Logo
                 variant='text'
                 color='inherit'
                 sx={t => ({
@@ -280,7 +303,9 @@ export const Header: FC = () => {
                     },
                   },
                 })}
-              />
+              /> */}
+
+              {isActive ? <img src="mobileLogoBlack.png" alt="" /> : <img src="mobileLogo.png" alt="" />}
             </Link>
           ) : (
             <Box
@@ -316,7 +341,7 @@ export const Header: FC = () => {
           ))}
 
           <IconButton sx={hideOn('up', 'lg')} onClick={handleBurgerClick}>
-            <SvgIcon
+            {/* <SvgIcon
               sx={{
                 fontSize: '30px',
                 color:
@@ -326,7 +351,9 @@ export const Header: FC = () => {
               }}
             >
               <MenuIcon />
-            </SvgIcon>
+            </SvgIcon> */}
+            {isActive ? <img src="burgerLogoBlack.png" alt="" /> : <img src="burgerLogo.png" alt="" />}
+
           </IconButton>
 
           <IconButton
@@ -342,7 +369,7 @@ export const Header: FC = () => {
             </SvgIcon>
           </IconButton>
         </Box>
-      </Background>
+      </Background >
     </>
   )
 }
