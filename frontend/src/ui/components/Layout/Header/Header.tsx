@@ -76,63 +76,67 @@ export const Header: FC = () => {
     }
   }
 
+  const screenWidth = window.innerWidth;
+
   return (
     <>
       <ModalController control={searchModal.control}>
         <SearchModal {...searchModal.props} />
       </ModalController>
 
-      <Box sx={{
-        position: 'fixed',
-        top: '80px',
-        left: 0,
-        zIndex: 2,
-        transition: 'transform 0.3s ease-in-out',
-        transform: isActive ? 'translateY(0px)' : 'translateY(-110%)'
-      }}>
-        <ul style={{
-          backgroundColor: '#fff',
-          borderRadius: '0 0 20px 20px',
-          margin: '0px',
-          listStyle: 'none',
-          width: '100vw',
-          height: 'fit-content',
-          boxShadow: '0 0 30px #00000031',
-          padding: '5px 0'
+      {screenWidth < 1200 &&
+        <Box sx={{
+          position: 'fixed',
+          top: '80px',
+          left: 0,
+          zIndex: 2,
+          transition: 'transform 0.4s ease-in-out',
+          transform: isActive ? 'translateY(0px)' : 'translateY(-150%)'
         }}>
-          <li style={{
-            fontSize: '14px',
-            padding: '10px 20px',
-            borderBottom: '1px solid #ececec'
-          }}
-            onClick={() => {navigate('/'); setIsActive(!isActive)}}
-          >
-            Главная
-          </li>
-          {HEADER_LINKS.map((link, index) => (
-            <li
-              key={index}
-              style={{
-                fontSize: '14px',
-                padding: '10px 20px',
-                borderBottom: '1px solid #ececec'
-              }}
-              onClick={() => {navigate(link.path); setIsActive(!isActive)}}
+          <ul style={{
+            backgroundColor: '#fff',
+            borderRadius: '0 0 20px 20px',
+            margin: '0px',
+            listStyle: 'none',
+            width: '100vw',
+            height: 'fit-content',
+            boxShadow: '0 0 30px #00000031',
+            padding: '5px 0'
+          }}>
+            <li style={{
+              fontSize: '14px',
+              padding: '10px 20px',
+              borderBottom: '1px solid #ececec'
+            }}
+              onClick={() => { navigate('/'); setIsActive(!isActive) }}
             >
-              {link.title}
+              Главная
             </li>
-          ))}
-          <li style={{
-            fontSize: '14px',
-            padding: '10px 20px',
-            borderBottom: 'none'
-          }}
-            onClick={handleAuthlick}
-          >
-            Профиль
-          </li>
-        </ul>
-      </Box>
+            {HEADER_LINKS.map((link, index) => (
+              <li
+                key={index}
+                style={{
+                  fontSize: '14px',
+                  padding: '10px 20px',
+                  borderBottom: '1px solid #ececec'
+                }}
+                onClick={() => { navigate(link.path); setIsActive(!isActive) }}
+              >
+                {link.title}
+              </li>
+            ))}
+            <li style={{
+              fontSize: '14px',
+              padding: '10px 20px',
+              borderBottom: 'none'
+            }}
+              onClick={handleAuthlick}
+            >
+              Профиль
+            </li>
+          </ul>
+        </Box>
+      }
 
       <ModalController control={authorizationModal.control}>
         <AuthorizationModal {...authorizationModal.props} />
