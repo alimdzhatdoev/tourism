@@ -39,7 +39,7 @@ const HelpPage: FC = () => {
   return (
     <>
       <RootHeader sx={{
-        background: 'url(news_back.png)',
+        background: 'url(help_back.png)',
         backgroundPosition: 'center',
         backgroundRepeat: 'no-repeat',
         backgroundSize: 'cover',

@@ -79,7 +79,7 @@ const ServicesPage: FC = () => {
       <RootHeader
         sx={{
           alignItems: 'center',
-          background: 'url(news_back.png)',
+          background: 'url(services_back.png)',
           backgroundPosition: 'center',
           backgroundRepeat: 'no-repeat',
           backgroundSize: 'cover',
