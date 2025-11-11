@@ -21,11 +21,11 @@ const DEFAULT_COLUMNS = 4
 
 export const SERVICES_FILTERS: Array<{ group_id: number; title: string }> = [
   { group_id: GROUPS_IDS.guides, title: 'Гиды' },
-  { group_id: GROUPS_IDS.hotels, title: 'Гостиницы' },
-  { group_id: GROUPS_IDS.equipment, title: 'Прокат оборудования' },
-  { group_id: GROUPS_IDS.restaurants, title: 'Кафе-рестораны' },
+  // { group_id: GROUPS_IDS.hotels, title: 'Гостиницы' },
+  // { group_id: GROUPS_IDS.equipment, title: 'Прокат оборудования' },
+  // { group_id: GROUPS_IDS.restaurants, title: 'Кафе-рестораны' },
   { group_id: GROUPS_IDS.museums, title: 'Музеи' },
-  { group_id: GROUPS_IDS.fuel_stations, title: 'АЗС' },
+  // { group_id: GROUPS_IDS.fuel_stations, title: 'АЗС' },
 ]
 
 const ServicesPage: FC = () => {
