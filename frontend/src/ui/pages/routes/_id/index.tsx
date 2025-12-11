@@ -1,6 +1,6 @@
-import {FC, useMemo, useState} from 'react'
-import {useNavigate, useParams} from 'react-router-dom'
-import {ModalController, Rating, RouteSpecs} from '@/ui/components'
+import { FC, useMemo, useState } from 'react'
+import { useNavigate, useParams } from 'react-router-dom'
+import { ModalController, Rating, RouteSpecs } from '@/ui/components'
 import {
   alpha,
   Avatar,
@@ -12,30 +12,30 @@ import {
   Typography,
   useTheme,
 } from '@mui/material'
-import {useGetRouteQuery, useGetRoutesListQuery} from '@/core/store/routes'
-import {Navigation, Pagination} from 'swiper/modules'
-import {Swiper, SwiperProps, SwiperSlide} from 'swiper/react'
-import {APP_FONTS} from '@/ui/themes/baseTheme'
-import {YandexMap} from '@/modules/mui-yandex-maps'
-import {LocationMarker, StyledArrowRight} from '@/assets/svg'
+import { useGetRouteQuery, useGetRoutesListQuery } from '@/core/store/routes'
+import { Navigation, Pagination } from 'swiper/modules'
+import { Swiper, SwiperProps, SwiperSlide } from 'swiper/react'
+import { APP_FONTS } from '@/ui/themes/baseTheme'
+import { YandexMap } from '@/modules/mui-yandex-maps'
+import { LocationMarker, StyledArrowRight } from '@/assets/svg'
 import CircleIcon from '@mui/icons-material/Circle'
-import {DESKTOP_MAX_WIDTH} from '@/constants'
-import {RouteTile} from '@/ui/components/_tiles'
-import {hideOn, rootStyle, colorScheme} from '@/core/utils'
-import {useSelector} from 'react-redux'
-import {miscStateSelector} from '@/core/store/misc'
-import {useIsDownLg, useModal} from '@/core/hooks'
+import { DESKTOP_MAX_WIDTH } from '@/constants'
+import { RouteTile } from '@/ui/components/_tiles'
+import { hideOn, rootStyle, colorScheme } from '@/core/utils'
+import { useSelector } from 'react-redux'
+import { miscStateSelector } from '@/core/store/misc'
+import { useIsDownLg, useModal } from '@/core/hooks'
 import {
   ReviewModal,
   ReviewModalProps,
 } from '@/ui/components/_modals/ReviewModal'
-import {Download} from '@mui/icons-material'
-import {REVIEWS_BLOCK_ID} from '@/constants/misc'
+import { Download } from '@mui/icons-material'
+import { REVIEWS_BLOCK_ID } from '@/constants/misc'
 import {
   AuthorizationModal,
   AuthorizationModalProps,
 } from '@/ui/components/_modals/AuthorizationModal'
-import {downloadRoutePdf} from '../pdf/Document'
+import { downloadRoutePdf } from '../pdf/Document'
 
 const SLIDES_OFFSET_BEFORE = Math.max(
   (window.innerWidth - DESKTOP_MAX_WIDTH) / 2,
@@ -50,7 +50,7 @@ const RouteIdPage: FC = () => {
 
   const id = parseInt(params.id ?? '0', 10) || 0
 
-  const {data: routeData} = useGetRouteQuery(
+  const { data: routeData } = useGetRouteQuery(
     {
       id,
       expand: {
@@ -61,7 +61,7 @@ const RouteIdPage: FC = () => {
         excursions: true,
       },
     },
-    {skip: id === 0},
+    { skip: id === 0 },
   )
 
   const route = routeData?.data
@@ -70,31 +70,31 @@ const RouteIdPage: FC = () => {
   const handleGallerySlideIndexChange: NonNullable<
     SwiperProps['onRealIndexChange']
   > = swiper => {
-    const {realIndex} = swiper
+    const { realIndex } = swiper
     setGallerySlideIndex(realIndex)
   }
 
   const [descriptionItemIndex, setDescriptionItemIndex] = useState(0)
   const descriptionItem = useMemo(() => {
     if (!route) return null
-    const {listDescription} = route.customProperties ?? {}
+    const { listDescription } = route.customProperties ?? {}
     if (!listDescription) return null
     return listDescription[descriptionItemIndex]
   }, [route, descriptionItemIndex])
 
-  const {user} = useSelector(miscStateSelector)
+  const { user } = useSelector(miscStateSelector)
   const reviewModal = useModal<ReviewModalProps>()
   const authorizationModal = useModal<AuthorizationModalProps>()
   const [reviewsSlideIndex, setReviewsSlideIndex] = useState(0)
   const handleReviewsSlideIndexChange: NonNullable<
     SwiperProps['onRealIndexChange']
   > = swiper => {
-    const {realIndex} = swiper
+    const { realIndex } = swiper
     setReviewsSlideIndex(realIndex)
   }
 
-  const {data} = useGetRoutesListQuery({
-    expand: {photos: true},
+  const { data } = useGetRoutesListQuery({
+    expand: { photos: true },
     size: 10,
   })
   const popular = data?.data.results
@@ -202,7 +202,7 @@ const RouteIdPage: FC = () => {
               },
             })}
           >
-            {route ? route.name : <Skeleton sx={{width: '100%'}} />}
+            {route ? route.name : <Skeleton sx={{ width: '100%' }} />}
           </Typography>
 
           {route?.ratingProps ? (
@@ -211,25 +211,11 @@ const RouteIdPage: FC = () => {
               onClick={() => {
                 if (route.ratingProps?.reviewsCount === 0) return
                 const reviewsBlock = document.getElementById(REVIEWS_BLOCK_ID)
-                reviewsBlock?.scrollIntoView({behavior: 'smooth'})
+                reviewsBlock?.scrollIntoView({ behavior: 'smooth' })
               }}
-              sx={[!!route.ratingProps.reviewsCount && {cursor: 'pointer'}]}
+              sx={[!!route.ratingProps.reviewsCount && { cursor: 'pointer' }]}
             />
           ) : null}
-          
-          {/* добавить кнопку забронировать  */}
-          <Button
-            variant='outlined'
-            sx={t => ({
-              color: t.palette.text.primary + ' !important',
-              borderColor: alpha(t.palette.text.primary, 0.5),
-              width: '100%',
-              height: '50px',
-            })}
-            onClick={handleBookingClick}
-          >
-            <Typography sx={{fontWeight: 600}}>Забронировать</Typography>
-          </Button>
 
           <RouteSpecs
             difficulty={route?.difficulty}
@@ -255,6 +241,20 @@ const RouteIdPage: FC = () => {
             isWithTitles
             isFullsize
           />
+
+          {/* добавить кнопку забронировать  */}
+          <Button
+            variant='outlined'
+            sx={t => ({
+              color: t.palette.text.primary + ' !important',
+              borderColor: alpha(t.palette.text.primary, 0.5),
+              width: '100%',
+              height: '50px',
+            })}
+            onClick={handleBookingClick}
+          >
+            <Typography sx={{ fontWeight: 600 }}>Забронировать</Typography>
+          </Button>
         </Box>
 
         <Box
@@ -288,10 +288,10 @@ const RouteIdPage: FC = () => {
               prevEl: '#ImagesNavigationPrev',
               nextEl: '#ImagesNavigationNext',
             }}
-            pagination={{el: '.images-pagination'}}
+            pagination={{ el: '.images-pagination' }}
             loop
           >
-            {route?.bannerItemPropsList.map(({id: key, ...props}) => (
+            {route?.bannerItemPropsList.map(({ id: key, ...props }) => (
               <SwiperSlide key={key}>
                 <Box
                   component='img'
@@ -374,7 +374,7 @@ const RouteIdPage: FC = () => {
                 <StyledArrowRight />
               </IconButton>
 
-              <Typography sx={{fontSize: '16px'}}>
+              <Typography sx={{ fontSize: '16px' }}>
                 {gallerySlideIndex + 1}/{route?.bannerItemPropsList.length}
               </Typography>
 
@@ -556,7 +556,7 @@ const RouteIdPage: FC = () => {
               }}
               loop
             >
-              {route?.stops.map(({id: key, ...props}, index) => (
+              {route?.stops.map(({ id: key, ...props }, index) => (
                 <SwiperSlide key={key}>
                   <Box
                     onClick={() => {
@@ -628,7 +628,7 @@ const RouteIdPage: FC = () => {
                           }}
                         />
                       </Box>
-                      <Box sx={{display: 'flex', flexDirection: 'column'}}>
+                      <Box sx={{ display: 'flex', flexDirection: 'column' }}>
                         <Typography
                           sx={{
                             textTransform: 'uppercase',
@@ -918,7 +918,7 @@ const RouteIdPage: FC = () => {
             Описание маршрута
           </Typography>
 
-          <Box sx={{display: 'flex', gap: '12px'}}>
+          <Box sx={{ display: 'flex', gap: '12px' }}>
             {route.customProperties.listDescription.map((item, index) => (
               <Button
                 key={item.title}
@@ -943,9 +943,9 @@ const RouteIdPage: FC = () => {
                     color: t => t.palette.text.primary,
                   },
                   index !== descriptionItemIndex &&
-                    isDownLg && {
-                      backgroundColor: t => t.palette.grey[300],
-                    },
+                  isDownLg && {
+                    backgroundColor: t => t.palette.grey[300],
+                  },
                   index === descriptionItemIndex && {
                     backgroundColor: '#296587 !important',
                   },
@@ -1014,7 +1014,7 @@ const RouteIdPage: FC = () => {
             }),
           ]}
         >
-          <Box sx={{display: 'flex', alignItems: 'center', gap: '48px'}}>
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: '48px' }}>
             <Typography
               sx={[
                 rootStyle,
@@ -1174,7 +1174,7 @@ const RouteIdPage: FC = () => {
                   spaceBetween={isDownLg ? '16px' : '30px'}
                   loop
                 >
-                  {route.reviews.map(({id: key, ...props}) => (
+                  {route.reviews.map(({ id: key, ...props }) => (
                     <SwiperSlide key={key}>
                       <Box
                         sx={t => ({
@@ -1205,7 +1205,7 @@ const RouteIdPage: FC = () => {
                           })}
                         >
                           <Avatar
-                            sx={{bgcolor: t => t.palette.grey[300]}}
+                            sx={{ bgcolor: t => t.palette.grey[300] }}
                             alt={props.createdBy.fullName}
                           />
                           <Box
@@ -1301,7 +1301,7 @@ const RouteIdPage: FC = () => {
                     <StyledArrowRight />
                   </IconButton>
 
-                  <Typography sx={{fontSize: '16px'}}>
+                  <Typography sx={{ fontSize: '16px' }}>
                     {reviewsSlideIndex + 1}/{route?.reviews.length}
                   </Typography>
 
@@ -1388,11 +1388,11 @@ const RouteIdPage: FC = () => {
                 prevEl: '#PlacesNavigationPrev',
                 nextEl: '#PlacesNavigationNext',
               }}
-              pagination={{el: '.routes-pagination'}}
+              pagination={{ el: '.routes-pagination' }}
               slidesOffsetBefore={SLIDES_OFFSET_BEFORE}
               loop
             >
-              {popular.map(({...props}) => (
+              {popular.map(({ ...props }) => (
                 <SwiperSlide key={props.name}>
                   <RouteTile {...props} hideSpecs />
                 </SwiperSlide>
