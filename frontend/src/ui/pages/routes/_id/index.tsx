@@ -129,6 +129,19 @@ const RouteIdPage: FC = () => {
     await downloadRoutePdf(route)
   }
 
+  const handleBookingClick = () => {
+    if (user) {
+      navigate('/profile')
+      return
+    }
+
+    authorizationModal.open({
+      onAuthorized: () => {
+        navigate('/profile')
+      },
+    })
+  }
+
   return (
     <>
       <ModalController control={authorizationModal.control}>
@@ -203,6 +216,20 @@ const RouteIdPage: FC = () => {
               sx={[!!route.ratingProps.reviewsCount && {cursor: 'pointer'}]}
             />
           ) : null}
+          
+          {/* добавить кнопку забронировать  */}
+          <Button
+            variant='outlined'
+            sx={t => ({
+              color: t.palette.text.primary + ' !important',
+              borderColor: alpha(t.palette.text.primary, 0.5),
+              width: '100%',
+              height: '50px',
+            })}
+            onClick={handleBookingClick}
+          >
+            <Typography sx={{fontWeight: 600}}>Забронировать</Typography>
+          </Button>
 
           <RouteSpecs
             difficulty={route?.difficulty}

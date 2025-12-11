@@ -92,6 +92,7 @@ export const AuthorizationModal: FC<AuthorizationModalProps> = ({
       maxWidth={678}
       sx={t => ({
         alignItems: 'flex-start',
+        overflow: 'hidden',
         [t.breakpoints.down('lg')]: {
           alignItems: 'center',
           gap: '30px',

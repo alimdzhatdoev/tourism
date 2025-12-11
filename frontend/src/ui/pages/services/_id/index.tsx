@@ -1,6 +1,6 @@
-import {FC, useCallback, useMemo, useRef, useState} from 'react'
-import {useParams} from 'react-router-dom'
-import {ModalController, Rating} from '@/ui/components'
+import { FC, useCallback, useMemo, useRef, useState } from 'react'
+import { useNavigate, useParams } from 'react-router-dom'
+import { ModalController, Rating } from '@/ui/components'
 import {
   alpha,
   Avatar,
@@ -24,28 +24,28 @@ import {
   useGetAttractionQuery,
   useGetAttractionsListQuery,
 } from '@/core/store/attractions'
-import {PlaceIcon} from '@/ui/components/_map-icons'
-import {YandexMap} from '@/modules/mui-yandex-maps'
-import {DESKTOP_MAX_WIDTH, REVIEWS_BLOCK_ID} from '@/constants/misc'
-import {Swiper, SwiperProps, SwiperRef, SwiperSlide} from 'swiper/react'
-import {APP_FONTS} from '@/ui/themes/baseTheme'
-import {Navigation, Pagination} from 'swiper/modules'
-import {PlaceTile} from '@/ui/components/_tiles'
-import {skipToken} from '@reduxjs/toolkit/query'
-import {GROUPS_IDS} from '@/constants'
-import {useSelector} from 'react-redux'
-import {useIsDownLg, useModal} from '@/core/hooks'
-import {miscStateSelector} from '@/core/store/misc'
+import { PlaceIcon } from '@/ui/components/_map-icons'
+import { YandexMap } from '@/modules/mui-yandex-maps'
+import { DESKTOP_MAX_WIDTH, REVIEWS_BLOCK_ID } from '@/constants/misc'
+import { Swiper, SwiperProps, SwiperRef, SwiperSlide } from 'swiper/react'
+import { APP_FONTS } from '@/ui/themes/baseTheme'
+import { Navigation, Pagination } from 'swiper/modules'
+import { PlaceTile } from '@/ui/components/_tiles'
+import { skipToken } from '@reduxjs/toolkit/query'
+import { GROUPS_IDS } from '@/constants'
+import { useSelector } from 'react-redux'
+import { useIsDownLg, useModal } from '@/core/hooks'
+import { miscStateSelector } from '@/core/store/misc'
 import {
   ReviewModal,
   ReviewModalProps,
 } from '@/ui/components/_modals/ReviewModal'
-import {Email, Language, Person, Phone, WhatsApp} from '@mui/icons-material'
+import { Email, Language, Person, Phone, WhatsApp } from '@mui/icons-material'
 import {
   AuthorizationModal,
   AuthorizationModalProps,
 } from '@/ui/components/_modals/AuthorizationModal'
-import {StyledArrowRight} from '@/assets/svg'
+import { StyledArrowRight } from '@/assets/svg'
 
 const SLIDES_OFFSET_BEFORE = Math.max(
   (window.innerWidth - DESKTOP_MAX_WIDTH) / 2,
@@ -65,10 +65,11 @@ const ServicesIdPage: FC = () => {
   const theme = useTheme()
   const isDownLg = useIsDownLg()
   const params = useParams<string>()
+  const navigate = useNavigate()
 
   const id = parseInt(params.id ?? '0', 10) || 0
 
-  const {data: attractionData} = useGetAttractionQuery(
+  const { data: attractionData } = useGetAttractionQuery(
     {
       id,
       expand: {
@@ -81,7 +82,7 @@ const ServicesIdPage: FC = () => {
         contacts__contact__kind: true,
       },
     },
-    {skip: id === 0},
+    { skip: id === 0 },
   )
 
   const attraction = attractionData?.data
@@ -111,19 +112,19 @@ const ServicesIdPage: FC = () => {
   const handleCarouselSlideIndexChange = useCallback<
     NonNullable<SwiperProps['onRealIndexChange']>
   >(swiper => {
-    const {realIndex} = swiper
+    const { realIndex } = swiper
     fullWidthSwiperRef.current?.swiper.slideTo(realIndex)
     setGallerySlideIndex(realIndex)
   }, [])
 
-  const {user} = useSelector(miscStateSelector)
+  const { user } = useSelector(miscStateSelector)
   const reviewModal = useModal<ReviewModalProps>()
   const authorizationModal = useModal<AuthorizationModalProps>()
   const [reviewsSlideIndex, setReviewsSlideIndex] = useState(0)
   const handleReviewsSlideIndexChange: NonNullable<
     SwiperProps['onRealIndexChange']
   > = swiper => {
-    const {realIndex} = swiper
+    const { realIndex } = swiper
     setReviewsSlideIndex(realIndex)
   }
 
@@ -138,24 +139,24 @@ const ServicesIdPage: FC = () => {
     )
     if (!foundGroupType) return null
     const [type, groupId] = foundGroupType
-    return {type, id: groupId}
+    return { type, id: groupId }
   }, [attraction])
 
-  const {data} = useGetAttractionsListQuery(
+  const { data } = useGetAttractionsListQuery(
     groupType
       ? {
-          filters: {
-            group_id: groupType.id.toString(),
-          },
-          expand: {photos: true, location: true, reviews: true},
-        }
+        filters: {
+          group_id: groupType.id.toString(),
+        },
+        expand: { photos: true, location: true, reviews: true },
+      }
       : skipToken,
   )
 
   const places =
     data?.data.results
       .filter(p => p.id !== id)
-      .map(a => ({...a.placeTileProps, id: a.id})) ?? []
+      .map(a => ({ ...a.placeTileProps, id: a.id })) ?? []
 
   const contacts = useMemo(
     () =>
@@ -202,6 +203,19 @@ const ServicesIdPage: FC = () => {
         rating: v,
       })
     }
+  }
+
+  const handleBookingClick = () => {
+    if (user) {
+      navigate('/profile')
+      return
+    }
+
+    authorizationModal.open({
+      onAuthorized: () => {
+        navigate('/profile')
+      },
+    })
   }
 
   return (
@@ -262,7 +276,7 @@ const ServicesIdPage: FC = () => {
               },
             })}
           >
-            {attraction ? attraction.name : <Skeleton sx={{width: '100%'}} />}
+            {attraction ? attraction.name : <Skeleton sx={{ width: '100%' }} />}
           </Typography>
 
           {attraction?.ratingProps ? (
@@ -271,10 +285,10 @@ const ServicesIdPage: FC = () => {
               onClick={() => {
                 if (attraction.ratingProps?.reviewsCount === 0) return
                 const reviewsBlock = document.getElementById(REVIEWS_BLOCK_ID)
-                reviewsBlock?.scrollIntoView({behavior: 'smooth'})
+                reviewsBlock?.scrollIntoView({ behavior: 'smooth' })
               }}
               sx={[
-                !!attraction.ratingProps.reviewsCount && {cursor: 'pointer'},
+                !!attraction.ratingProps.reviewsCount && { cursor: 'pointer' },
               ]}
               slotProps={{
                 reviewsCount: {
@@ -293,7 +307,7 @@ const ServicesIdPage: FC = () => {
           <Typography
             sx={[
               hideOn('up', 'lg'),
-              {fontSize: '14px', whiteSpace: 'pre-line'},
+              { fontSize: '14px', whiteSpace: 'pre-line' },
             ]}
           >
             {attraction ? (
@@ -302,12 +316,12 @@ const ServicesIdPage: FC = () => {
               <>
                 <Skeleton
                   variant='text'
-                  sx={{opacity: 0.2, marginBottom: '15px'}}
+                  sx={{ opacity: 0.2, marginBottom: '15px' }}
                   width='80%'
                 />
                 <Skeleton
                   variant='text'
-                  sx={{opacity: 0.2, marginBottom: '15px'}}
+                  sx={{ opacity: 0.2, marginBottom: '15px' }}
                   width='70%'
                 />
               </>
@@ -373,6 +387,14 @@ const ServicesIdPage: FC = () => {
               </Button>
             </a>
           ) : null}
+
+          <Button
+            variant='outlined'
+            sx={s.contactButton}
+            onClick={handleBookingClick}
+          >
+            <Typography sx={s.contactText}>Забронировать</Typography>
+          </Button>
         </Box>
 
         <Box
@@ -410,10 +432,10 @@ const ServicesIdPage: FC = () => {
               nextEl: '#ImagesNavigationNext',
             }}
             onRealIndexChange={handleCarouselSlideIndexChange}
-            pagination={{el: '.images-pagination'}}
+            pagination={{ el: '.images-pagination' }}
             loop
           >
-            {attraction?.bannerItemPropsList.map(({id: key, ...props}) => (
+            {attraction?.bannerItemPropsList.map(({ id: key, ...props }) => (
               <SwiperSlide key={key}>
                 <Box
                   component='img'
@@ -497,7 +519,7 @@ const ServicesIdPage: FC = () => {
                 <StyledArrowRight />
               </IconButton>
 
-              <Typography sx={{fontSize: '16px', color: 'black'}}>
+              <Typography sx={{ fontSize: '16px', color: 'black' }}>
                 {gallerySlideIndex + 1}/{attraction?.bannerItemPropsList.length}
               </Typography>
 
@@ -542,7 +564,7 @@ const ServicesIdPage: FC = () => {
             }),
           ]}
         >
-          <Box sx={{display: 'flex', alignItems: 'center', gap: '48px'}}>
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: '48px' }}>
             <Typography
               sx={[
                 rootStyle,
@@ -609,7 +631,7 @@ const ServicesIdPage: FC = () => {
             }),
           ]}
         >
-          <Box sx={{display: 'flex', alignItems: 'center', gap: '48px'}}>
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: '48px' }}>
             <Typography
               sx={[
                 rootStyle,
@@ -631,7 +653,7 @@ const ServicesIdPage: FC = () => {
             <Box
               sx={[
                 hideOn('down', 'lg'),
-                {height: '1px', flex: 1, bgcolor: 'black'},
+                { height: '1px', flex: 1, bgcolor: 'black' },
               ]}
             />
 
@@ -692,7 +714,7 @@ const ServicesIdPage: FC = () => {
             variant='contained'
             sx={[
               hideOn('up', 'lg'),
-              {backgroundColor: '#296587', marginTop: '15px'},
+              { backgroundColor: '#296587', marginTop: '15px' },
             ]}
             onClick={handleCreateRouteClick}
           >
@@ -812,7 +834,7 @@ const ServicesIdPage: FC = () => {
                   spaceBetween={isDownLg ? '16px' : '30px'}
                   loop
                 >
-                  {attraction.reviews.map(({id: key, ...props}) => (
+                  {attraction.reviews.map(({ id: key, ...props }) => (
                     <SwiperSlide key={key}>
                       <Box
                         sx={t => ({
@@ -843,7 +865,7 @@ const ServicesIdPage: FC = () => {
                           })}
                         >
                           <Avatar
-                            sx={{bgcolor: t => t.palette.grey[300]}}
+                            sx={{ bgcolor: t => t.palette.grey[300] }}
                             alt={props.createdBy.fullName}
                           />
                           <Box
@@ -940,7 +962,7 @@ const ServicesIdPage: FC = () => {
                   <StyledArrowRight />
                 </IconButton>
 
-                <Typography sx={{fontSize: '16px'}}>
+                <Typography sx={{ fontSize: '16px' }}>
                   {reviewsSlideIndex + 1}/{attraction?.reviews.length}
                 </Typography>
 
@@ -1022,13 +1044,13 @@ const ServicesIdPage: FC = () => {
               modules={[...(isDownLg ? [Pagination] : [])]}
               spaceBetween={isDownLg ? '24px' : '44px'}
               slidesPerView='auto'
-              pagination={{el: '.places-pagination'}}
+              pagination={{ el: '.places-pagination' }}
               slidesOffsetBefore={SLIDES_OFFSET_BEFORE}
               loop
             >
-              {places.map(({...props}) => (
+              {places.map(({ ...props }) => (
                 <SwiperSlide key={props.id}>
-                  <PlaceTile {...props} sx={{width: '100%', height: '100%'}} />
+                  <PlaceTile {...props} sx={{ width: '100%', height: '100%' }} />
                 </SwiperSlide>
               ))}
             </Swiper>
